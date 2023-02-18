@@ -1,5 +1,5 @@
 ﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@#if(TempData["success"]!= null){
+@if(TempData["success"]!= null){
     <script type="text/javascript">
         Swal.fire({
         position: 'top-end',
@@ -12,7 +12,7 @@
     </script>
 }
 
-@#if(TempData["error"]!= null){
+@if(TempData["error"]!= null){
     <script type="text/javascript">
         Swal.fire({
         position: 'top-end',
