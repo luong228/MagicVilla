@@ -36,7 +36,6 @@ namespace MagicVilla_VillaAPI.Controllers.v1
             _dbVilla = dbVilla;
         }
         [HttpGet]
-        [Authorize]
         //[MapToApiVersion("1.0")]
         public async Task<ActionResult<APIResponse>> GetVillaNumbers()
         {
