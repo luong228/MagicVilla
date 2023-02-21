@@ -20,14 +20,14 @@ namespace MagicVilla_VillaAPI.Controllers.v2
     [Route("api/v{version:apiVersion}/VillaNumberAPI")]
     [ApiController]
     [ApiVersion("2.0")]
-    public class VillaNumberAPIv2Controller : ControllerBase
+    public class VillaNumberAPIController : ControllerBase
     {
         private readonly ILogging _logger;
         private readonly IVillaNumberRepository _dbVillaNumber;
         private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;
         protected APIResponse _response;
-        public VillaNumberAPIv2Controller(ILogging logger, IVillaNumberRepository dbVillaNumber, IMapper mapper, IVillaRepository dbVilla)
+        public VillaNumberAPIController(ILogging logger, IVillaNumberRepository dbVillaNumber, IMapper mapper, IVillaRepository dbVilla)
         {
             _logger = logger;
             _dbVillaNumber = dbVillaNumber;
@@ -36,7 +36,7 @@ namespace MagicVilla_VillaAPI.Controllers.v2
             _dbVilla = dbVilla;
         }
 
-        [HttpGet]
+        [HttpGet("GetString")]
         //[MapToApiVersion("2.0")]
         public IEnumerable<string> Get()
         {
