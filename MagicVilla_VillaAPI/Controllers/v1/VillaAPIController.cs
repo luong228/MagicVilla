@@ -32,6 +32,7 @@ namespace MagicVilla_VillaAPI.Controllers.v1
             _response = new();
         }
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<ActionResult<APIResponse>> GetVillas()
         {
             try
@@ -56,6 +57,8 @@ namespace MagicVilla_VillaAPI.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ResponseCache(Duration = 30)]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         //[ProducesResponseType(200, Type = typeof(VillaDTO))]
         //[ProducesResponseType(200)]
         [Authorize(Roles = "admin")]
