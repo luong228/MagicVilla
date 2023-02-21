@@ -14,13 +14,12 @@ using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Net;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
     //[Route("api/[controller]")]
     [Route("api/v{version:apiVersion}/VillaNumberAPI")]
     [ApiController]
     [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
     public class VillaNumberAPIController : ControllerBase
     {
         private readonly ILogging _logger;
@@ -33,12 +32,12 @@ namespace MagicVilla_VillaAPI.Controllers
             _logger = logger;
             _dbVillaNumber = dbVillaNumber;
             _mapper = mapper;
-            this._response = new();
+            _response = new();
             _dbVilla = dbVilla;
         }
         [HttpGet]
         [Authorize]
-        [MapToApiVersion("1.0")]
+        //[MapToApiVersion("1.0")]
         public async Task<ActionResult<APIResponse>> GetVillaNumbers()
         {
             try
@@ -56,13 +55,7 @@ namespace MagicVilla_VillaAPI.Controllers
                 _response.ErrorMessages
                         = new List<string>() { ex.ToString() };
             }
-            return (_response);
-        }
-        [HttpGet]
-        [MapToApiVersion("2.0")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
+            return _response;
         }
 
         [HttpGet("{id:int}", Name = "GetVillaNumber")]
@@ -77,7 +70,7 @@ namespace MagicVilla_VillaAPI.Controllers
                 if (id == 0)
                 {
                     _logger.Log("Get villa Error with Id " + id, "error");
-                    _response.StatusCode=HttpStatusCode.BadRequest;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
                 var villa = await _dbVillaNumber.Get(u => u.VillaNO == id, includeProperties: "Villa");
@@ -94,9 +87,9 @@ namespace MagicVilla_VillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages
-                        = new List<string>() { ex.ToString()};
+                        = new List<string>() { ex.ToString() };
             }
-            return (_response);
+            return _response;
         }
         [HttpPost]
         [Authorize(Roles = "admin")]
@@ -104,7 +97,7 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<APIResponse>> CreateVilla([FromBody] VillaNumberCreateDTO createDTO)
-        { 
+        {
             try
             {
                 if (createDTO == null)
@@ -117,7 +110,7 @@ namespace MagicVilla_VillaAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _dbVilla.Get(u=> u.Id == createDTO.VillaID) == null)
+                if (await _dbVilla.Get(u => u.Id == createDTO.VillaID) == null)
                 {
                     ModelState.AddModelError("ErrorMessages", "Villa ID is invalid!");
                     return BadRequest(ModelState);
@@ -136,9 +129,9 @@ namespace MagicVilla_VillaAPI.Controllers
                 _response.StatusCode = HttpStatusCode.InternalServerError;
                 _response.IsSuccess = false;
                 _response.ErrorMessages
-                        = new List<string>() { ex.ToString()};
+                        = new List<string>() { ex.ToString() };
             }
-            return (_response);
+            return _response;
         }
         [HttpDelete("{id:int}", Name = "DeleteVillaNumber")]
         [Authorize(Roles = "admin")]
@@ -168,9 +161,9 @@ namespace MagicVilla_VillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages
-                        = new List<string>() { ex.ToString()};
+                        = new List<string>() { ex.ToString() };
             }
-            return (_response);
+            return _response;
         }
         [HttpPut("{id:int}", Name = "UpdateVillaNumber")]
         [Authorize(Roles = "admin")]
@@ -201,9 +194,9 @@ namespace MagicVilla_VillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages
-                        = new List<string>() { ex.ToString()};
+                        = new List<string>() { ex.ToString() };
             }
-            return (_response);
+            return _response;
         }
         [HttpPatch("{id:int}", Name = "UpdatePartialVillaNumber")]
         [Authorize(Roles = "admin")]
