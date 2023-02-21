@@ -57,7 +57,12 @@ namespace MagicVilla_VillaAPI.Controllers.v1
             }
             return _response;
         }
-
+        [HttpGet("GetString")]
+        //[MapToApiVersion("2.0")]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "version1", "version1" };
+        }
         [HttpGet("{id:int}", Name = "GetVillaNumber")]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
