@@ -32,7 +32,6 @@ namespace MagicVilla_VillaAPI.Controllers.v1
             _response = new();
         }
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<APIResponse>> GetVillas()
         {
             try
